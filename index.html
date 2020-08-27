@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Weather</title>
+        <!-- This is my reset -->
+        <link rel="stylesheet" type="text/css" href="Assets/CSS/reset.css">
+    
+        <!-- This is my Bootstrap Link -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+            
+        <!-- This is my css stylesheet link -->
+        <link rel="stylesheet" type="text/css" href="Assets/CSS/style.css">
+
+</head>
+
+<body>
+    <!-- Need a navbar at the top, titled "Weather Dashboard"-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">WEATHER DASHBOARD</a>
+    </nav>
+
+    <!-- Need a search text field, by city, with a search button on the left side -->
+    <div class="container">
+        <!-- <div class="row">     -->
+            <div class="col-md-3" id="search-Form">
+                <form id="searchForm">
+                    <div class="row">
+                        <div class="col-md-12" id="search">
+                            <label for="city-search">Search By City:</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="input">
+                            <input type="text" id="city-input">
+                            <button id="searchBtn" type="button">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        <!-- </div> -->
+    </div>
+
+    <!-- The search should return the city's current weather info in a container-->
+    <div class="container">
+        <!-- <div class="row"> -->
+            <div class="col-md-8 border" id="currentWeather">
+                
+                <div class="row">
+                    <!-- Includes City, Temp, Feels Like, and Clouds -->
+                    <div class="row" id="cityDate"></div>
+                        <div class="col-md-3" id="city">City:</div>
+                        <div class="col-md-3" id="temp">Temperature:</div>
+                        <div class="col-md-3" id="feels">Feels Like:</div>
+                        <div class="col-md-3" id="sky">Sky:</div>
+                </div>
+
+                <div class="row">
+                    <!-- Includes Temperature details-->
+                    <div class="row" id="temperature"></div>
+                        <div class="col-md-6" id="min">Low:</div>
+                        <div class="col-md-6" id="max">High:</div>
+                </div>
+                
+                <div class="row">
+                    <!-- Includes Humidity -->
+                    <div class="row" id="humidity">Humidity:</div>
+                </div>
+
+                <div class="row">
+                    <!-- Includes Wind Info -->
+                    <div class="row" id="wind"></div>
+                        <div class="col-md-6" id="speed">Wind Speed:</div>
+                        <div class="col-md-6" id="direction">Wind Direction:</div>
+                </div>
+
+                <div class="row">
+                    <!-- Includes UV Index-->
+                    <div class="row" id="uvIndex">UV Index:</div>
+                </div>
+            </div>
+        <!-- </div> -->
+
+        <!-- The Search also should return a 5 day forecast in the same container, but floated below-->
+        <!-- <div class="row">
+            <div class="col-md-8 border" id="fiveDay">
+            </div>
+        </div> -->
+    </div>
+    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+        var longitude="";
+        var latitude="";
+
+        function searchCityWeather(cities) {
+            var d = new Date();
+            var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+
+            // Querying the open weather map api for the selected city weather details
+            var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cities + "&appid=3daeb925a5c38264769a1622821c0bba";
+
+            $.ajax({
+                url: queryURL,
+                method: "GET",
+                async: "false"
+            }).then(function(response) {
+                console.log(response);
+                var cityName=response.name;
+                var clouds=response.weather[0].description;
+                var temp=((Number(response.main.temp) - 273.15) * 9/5 +32);
+                var feelsLike=((Number(response.main.feels_like) - 273.15) * 9/5 +32);
+                var tempMin=((Number(response.main.temp_min) - 273.15) * 9/5 +32);
+                var tempMax=((Number(response.main.temp_max) - 273.15) * 9/5 +32);
+                var humid=response.main.humidity;
+                var windSpeed=response.wind.speed;
+                var windDeg=response.wind.deg;
+                longitude=response.coord.lon;
+                latitude=response.coord.lat;
+
+                
+                $("#city").text(cityName);
+                $("#sky").text("Conditions: " + clouds);
+                $("#temp").text("Temperature: " + temp.toFixed(0));
+                $("#feels").text("Feels Like: " + feelsLike.toFixed(0));
+                $("#min").text("Low: " + tempMin.toFixed(0));
+                $("#max").text("High: " + tempMax.toFixed(0));
+                $("#humidity").text("Humidity: " + humid);
+                $("#speed").text("Wind Speed: " + windSpeed);
+                $("#direction").text("Wind Direction: " + windDeg);
+                $("#uvIndex").text("UV Index: " + longitude + latitude);
+
+                // Querying the api for the selected city UV Index
+                var queryURL = "http://api.openweathermap.org/data/2.5/uvi?appid=3daeb925a5c38264769a1622821c0bba&lat="+ latitude +"&lon="+ longitude;
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function(response) {
+                
+                })
+            }
+            )
+        }
+            
+        $("#searchBtn").on("click", function(){
+            var city=$("#city-input").val()
+            searchCityWeather(city)
+        })
+    </script>
+
+</body>
+
+</html>

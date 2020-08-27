@@ -1,0 +1,115 @@
+/* This is the navbar section */
+.navbar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+/* Ends the navbar section */
+
+    /* This is the search form section on the left of the page */
+    #search-Form {
+        float: left;
+        margin-top: 55px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+        background-color: rgb(211, 211, 211);
+        font-weight: bold;
+    }
+
+        #city-input {
+            height: 40px;
+        }
+
+        #searchBtn {
+            height: 40px;
+            background-color: blue; 
+            color: white; 
+        }
+
+        #searchBtn:active, #searchBtn:hover {
+            background: rgb(15, 238, 15);
+            color: white;
+        }
+    /* Ends the search form section */
+
+
+/* This is the returned results column */
+
+        /* This is the current weather section at the top of the main container */
+        #currentWeather {
+            float: right;
+            border: black;
+            border-width: 100%;
+            margin-top: 55px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        #cityDate {
+            text-align: center;
+            vertical-align: center;
+            height: 60px;
+            color: black;
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        #temperature {
+            text-align: center;
+            vertical-align: center;
+            height: 60px;
+        }
+
+        #min {
+            color: blue;
+        }
+
+        #max {
+            color: red;
+        }
+
+        #humidity {
+            text-align: center;
+            vertical-align: center;
+            height: 60px;
+            color: black;
+        }
+
+        #wind {
+            text-align: center;
+            vertical-align: center;
+            height: 60px;
+            color: black;
+        }
+
+        #uvIndex {
+            text-align: center;
+            vertical-align: center;
+
+            height: 60px;
+            color: black;
+        }
+        /* Ends the current weather section */
+
+
+        /* This begins the 5-Day Forecast section */
+        #fiveDay {
+            margin-top: 20px;
+            padding: 20px;
+            float: bottom;
+        }
+        /* Ends the 5-Day Forecast section */
+    /* Ends the returned results column */
+
+/* These rules take effect when the browser's width is either 768px or less */
+@media screen and (max-width: 768px) {
+    /* The body's bg color will be #333 */
+    body {
+      background-color: #333;
+    }
+    
+      /* The wrapper's width will be 600px */
+      .wrapper {
+        width: 100%;
+      }
+    }
